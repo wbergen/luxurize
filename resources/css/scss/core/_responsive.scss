@@ -1,0 +1,18 @@
+@use "sass:map";
+@mixin media-larger-than($breakpoint) {
+    $breakpointSize: map.get($grid-breakpoints, $breakpoint);
+    @each $breakpointName, $minSize in $grid-breakpoints {
+        @if $breakpointSize <= $minSize {
+            @media screen and (min-width: $minSize) {
+                @content;
+            }
+        }
+    }
+}
+
+// Usage Example:
+//@include media-larger-than(md) {
+//    .test {
+//        color: red;
+//    }
+//}

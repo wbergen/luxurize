@@ -4,9 +4,7 @@
     <title>{{ $title ?? config('site.name') }}</title>
 
     <!-- Externals -->
-{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">--}}
-
-    <!-- Google tag (gtag.js) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <!-- Google tag (gtag.js) -->
 {{--    <script async src="https://www.googletagmanager.com/gtag/js?id=G-11Z9KH1L6Z"></script>--}}
 {{--    <script>--}}
 {{--        window.dataLayer = window.dataLayer || [];--}}
@@ -71,5 +69,5 @@
           }
         }
     </script>
-    @vite(['resources/css/scss/app.scss'])
+    @vite(['resources/css/scss/app.scss', 'resources/js/app.js'])
 </head>

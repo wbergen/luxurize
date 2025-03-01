@@ -31,4 +31,9 @@ class Product extends Model
         'id' => 'integer',
         'price' => 'decimal:2',
     ];
+
+    public function getUri(): string
+    {
+        return sprintf('/products/%d', $this->id);
+    }
 }

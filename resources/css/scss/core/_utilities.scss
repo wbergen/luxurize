@@ -1,0 +1,27 @@
+// Some degree of overlap with vanilla bootstrap allows inheritence of site vars...
+
+// If it doesn't really go anywhere else...
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.w-100 {
+  width: 100%;
+}
+.h-100 {
+    height: 100%;
+}
+.mw-100 {
+  max-width: 100%;
+}
+.nowrap {
+  white-space: nowrap;
+}
+
+$positions: fixed, sticky, absolute, relative;
+@each $position in $positions {
+    .position-#{$position} {
+        position: $position;
+    }
+}

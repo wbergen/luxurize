@@ -1,0 +1,29 @@
+//@font-face {
+//    font-family: 'Molot';
+//    src: url('https://9ee277280003abc0.nyc3.cdn.digitaloceanspaces.com/commiestash/assets/fonts/Molot.otf') format('opentype');
+//}
+
+$deep-sky-blue: #1fc3fbff;
+$prussian-blue: #062e40ff;
+$magnolia: #f3eff5ff;
+$apple-green: #72b01dff;
+
+$primary: $deep-sky-blue;
+$secondary: $apple-green;
+$dark: $prussian-blue;
+$light: $magnolia;
+
+$theme-colors: (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    //"success":    $success,
+    //"info":       $info,
+    //"warning":    $warning,
+    //"danger":     $danger,
+    "light":      $light,
+    "white":      white,
+    "dark":       $dark
+);
+$body-bg: $magnolia;
+
+//$headings-font-family: "Molot";

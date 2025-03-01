@@ -1,0 +1,25 @@
+$displays: none, flex, block, inline-block;
+
+@each $gridSizeKey, $gridWidth in $grid-breakpoints {
+  @each $display in $displays {
+    @media (min-width: $gridWidth) {
+      .d-#{$gridSizeKey}-#{$display} {
+        display: $display !important;
+      }
+    }
+  }
+}
+
+@each $display in $displays {
+  .d-#{$display} {
+    display: $display !important;
+  }
+}
+
+// Flex utilities
+.flex-direction-row {
+    flex-direction: row;
+}
+.flex-direction-col {
+    flex-direction: column;
+}

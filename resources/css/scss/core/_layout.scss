@@ -1,0 +1,72 @@
+@use 'sass:math';
+@for $i from 1 through 4 {
+  .m-#{$i} {margin: math.pow(2, $i) * 1px;}
+  .mt-#{$i} {margin-top: math.pow(2, $i) * 1px;}
+  .mr-#{$i} {margin-right: math.pow(2, $i) * 1px;}
+  .mb-#{$i} {margin-bottom: math.pow(2, $i) * 1px;}
+  .ml-#{$i} {margin-left: math.pow(2, $i) * 1px;}
+  .mx-#{$i} {
+    margin-left: math.pow(2, $i) * 1px;
+    margin-right: math.pow(2, $i) * 1px;
+  }
+  .my-#{$i} {
+    margin-top: math.pow(2, $i) * 1px;
+    margin-bottom: math.pow(2, $i) * 1px;
+  }
+
+  .p-#{$i} {padding: math.pow(2, $i) * 1px;}
+  .pt-#{$i} {padding-top: math.pow(2, $i) * 1px;}
+  .pr-#{$i} {padding-right: math.pow(2, $i) * 1px;}
+  .pb-#{$i} {padding-bottom: math.pow(2, $i) * 1px;}
+  .pl-#{$i} {padding-left: math.pow(2, $i) * 1px;}
+  .px-#{$i} {
+    padding-left: math.pow(2, $i) * 1px;
+    padding-right: math.pow(2, $i) * 1px;
+  }
+  .py-#{$i} {
+    padding-top: math.pow(2, $i) * 1px;
+    padding-bottom: math.pow(2, $i) * 1px;
+  }
+}
+
+.m-0 {margin: 0;}
+.mt-0 {margin-top: 0;}
+.mr-0 {margin-right: 0;}
+.mb-0 {margin-bottom: 0;}
+.ml-0 {margin-left: 0;}
+.mx-0 {
+    margin-left: 0;
+    margin-right: 0;
+}
+.my-0 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.p-0 {padding: 0;}
+.pt-0 {padding-top: 0;}
+.pr-0 {padding-right: 0;}
+.pb-0 {padding-bottom: 0;}
+.pl-0 {padding-left: 0;}
+.px-0 {
+    padding-left: 0;
+    padding-right: 0;
+}
+.py-0 {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+.mt-auto {margin-top: auto;}
+.ml-auto {margin-left: auto;}
+.mb-auto {margin-bottom: auto;}
+.mr-auto {margin-right: auto;}
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.mx-auto {
+  margin-right: auto;
+  margin-left: auto;
+}

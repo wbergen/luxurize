@@ -1,0 +1,73 @@
+@use "sass:map";
+
+// Vars
+//@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Rubik+Bubbles&display=swap');
+
+$deep-sky-blue: #1fc3fbff;
+$prussian-blue: #062e40ff;
+$magnolia: #f3eff5ff;
+$apple-green: #72b01dff;
+
+$primary: $deep-sky-blue;
+$secondary: $prussian-blue;
+$dark: $prussian-blue;
+$success: $apple-green;
+
+$body-bg: $magnolia;
+//$font-family: "Quicksand", serif;
+
+@import "core/core";
+
+.shadow {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: $primary;
+}
+
+button {
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid $primary;
+    padding: .5rem .5rem;
+    font-weight: 600;
+    &:hover {
+        background-color: darken(white, 7%);
+    }
+}
+
+// STYLES
+nav {
+    //box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+    z-index: 101;
+    .shopping-cart {
+        border-right: 1px solid black;
+        padding-right: .5rem;
+    }
+}
+body {
+    margin: 0;
+    .page-content {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 78px .5rem .5rem;
+        max-width: 980px;
+        //box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+        min-height: 100vh;
+
+        .card {
+            background: white;
+            padding: .5rem;
+        }
+
+        a.product {
+            color: black;
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}

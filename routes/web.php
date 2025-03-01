@@ -8,13 +8,31 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::get('/', function() {
-    return view('home');
-});
+Route::get('/', [\App\Http\Controllers\ProductController::class, 'listView']);
+Route::prefix('products')
+    ->group(function() {
+        Route::get('{id}', [\App\Http\Controllers\ProductController::class, 'detailView'])->whereNumber('id');
+    });
+Route::prefix('ajax')
+    ->group(function() {
+        Route::prefix('products')
+            ->group(function() {
+                Route::post('add-to-cart', [\App\Http\Controllers\ProductController::class, 'addToCart']);
+            });
+
+    });
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

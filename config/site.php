@@ -14,10 +14,10 @@ return [
 //    ],
     'ld_type' => 'WebPage',
 //    'phone' => '+11234567890',
-    'logo' => config('app.image_url') . '/logos/splasharoo_logo_basic.webp',
+    'logo' => config('app.image_url') . '/layout/luxurize_logo_sm.webp',
     'logos' => [
-//        'svg' => config('app.image_url') . '/logos/cstash.svg',
-        'png' => config('app.image_url') . '/logos/splasharoo_logo_basic.webp',
-        'square' => config('app.image_url') . '/logos/splasharoo_logo_basic.webp',
+//        'svg' => config('app.image_url') . '/layout/cstash.svg',
+        'png' => config('app.image_url') . '/layout/luxurize_logo_sm.webp',
+        'square' => config('app.image_url') . '/layout/luxurize_logo_sm.webp',
     ],
 ];

@@ -1,0 +1,19 @@
+$alignments: left, center, right;
+@each $alignment in $alignments {
+  .text-#{$alignment} {
+    text-align: $alignment !important;
+  }
+}
+.font-weight-bold {
+  font-weight: 800;
+}
+@each $gridSizeKey, $gridWidth in $grid-breakpoints {
+  @each $alignment in $alignments {
+    @media (min-width: $gridWidth) {
+      .text-#{$gridSizeKey}-#{$alignment} {
+        text-align: $alignment !important;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,17 @@
+// Some degree of overlap with vanilla bootstrap allows inheritence of site vars...
+.text-primary {
+  color: $primary;
+}
+.text-light {
+  color: $light;
+}
+.border-primary {
+  border-color: $primary;
+}
+
+
+@each $name, $color in $theme-colors {
+    .bg-#{$name} {
+        background-color: $color !important;
+    }
+}

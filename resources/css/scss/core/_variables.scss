@@ -1,0 +1,33 @@
+$grid-breakpoints: (
+    xs: 0,
+    sm: 320px,
+    md: 768px,
+    lg: 1024px,
+    xl: 1280px,
+    xxl: 1440px
+) !default;
+$grid-breakpoints-reversed: mapReverse($grid-breakpoints);
+$gutter_size: 8px !default;
+$primary: blue !default;
+$light: white !default;
+$dark: black !default;
+$secondary: green !default;
+$danger: red !default;
+$success: green !default;
+$warning: orange !default;
+$theme-colors: (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "white":      white,
+    "dark":       $dark
+);
+$font-family: Arial, Helvetica, sans-serif !default;
+$heading-font-family: $font-family !default;
+$body-bg: $light !default;
+$border-radius: 16px !default;
+$body-color: #121212 !default;
+

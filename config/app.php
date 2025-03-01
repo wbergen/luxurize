@@ -54,6 +54,10 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'image_url' => env('IMAGE_URL', 'https://9ee277280003abc0.nyc3.cdn.digitaloceanspaces.com/luxurize/images'),
+
+    'image_cdn' => env('IMAGE_URL', 'https://9ee277280003abc0.nyc3.cdn.digitaloceanspaces.com/luxurize'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
