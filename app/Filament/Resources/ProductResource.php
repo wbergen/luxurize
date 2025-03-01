@@ -30,7 +30,7 @@ class ProductResource extends Resource
                     ->fileAttachmentsDirectory('article')
                     ->fileAttachmentsVisibility('public')
                     ->required(),
-                Forms\Components\TextInput::make('price')->numeric(),
+                Forms\Components\TextInput::make('price')->numeric()->required(),
                 Forms\Components\FileUpload::make('image')
                     ->disk(config('filesystems.default'))
                     ->directory('products')
