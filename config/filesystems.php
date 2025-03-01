@@ -60,6 +60,18 @@ return [
             'report' => false,
         ],
 
+        "digitalocean" => [
+            "driver" => "s3",
+            "key" => env('DO_ACCESS_KEY'),
+            "secret" => env('DO_SECRET'),
+            "endpoint" => "https://nyc3.digitaloceanspaces.com",
+            "region" => 'nyc3', // ex. nyc3
+            "bucket" => "9ee277280003abc0", // the unique name you gave your Space
+            "root" => "luxurize", // optional folder
+            "url" => "https://9ee277280003abc0.nyc3.digitaloceanspaces.com",
+            "visibility" => "private", // set visibility to private or public
+        ],
+
     ],
 
     /*
