@@ -41,7 +41,8 @@ class ProductResource extends Resource
                         '16:9',
                         '4:3',
                         '1:1',
-                    ]),
+                    ])
+                    ->required(),
                 Forms\Components\Toggle::make('for_sale')
                     ->label('For Sale?')
                     ->default(false),
