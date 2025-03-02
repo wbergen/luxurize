@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -31,6 +32,21 @@ class Product extends Model
         'id' => 'integer',
         'price' => 'decimal:2',
     ];
+
+    public function shoppingCarts(): BelongsToMany
+    {
+        return $this->belongsToMany(ShoppingCart::class);
+    }
+
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 
     public function getUri(): string
     {

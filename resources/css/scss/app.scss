@@ -2,19 +2,24 @@
 
 // Vars
 //@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Rubik+Bubbles&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 
 $deep-sky-blue: #1fc3fbff;
 $prussian-blue: #062e40ff;
 $magnolia: #f3eff5ff;
 $apple-green: #72b01dff;
 
-$primary: $deep-sky-blue;
-$secondary: $prussian-blue;
-$dark: $prussian-blue;
-$success: $apple-green;
+$xanthous: #e6af2e;
+$cadet: #8aa1b1;
+$ebony: #4a5043;
+
+$primary: $xanthous;
+$secondary: $ebony;
+$dark: $ebony;
+$success: darkgreen;
 
 $body-bg: $magnolia;
-//$font-family: "Quicksand", serif;
+$font-family: "Lora", serif;
 
 @import "core/core";
 
@@ -24,8 +29,10 @@ $body-bg: $magnolia;
 
 a {
     text-decoration: none;
-    font-weight: bold;
-    color: $primary;
+    color: black;
+    &:hover {
+        color: lighten($cadet, 10%);
+    }
 }
 
 button {

@@ -8,6 +8,12 @@
 .border-primary {
   border-color: $primary;
 }
+.text-dark {
+    color: $dark;
+}
+.text-black {
+    color: black;
+}
 
 
 @each $name, $color in $theme-colors {

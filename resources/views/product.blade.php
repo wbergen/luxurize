@@ -1,5 +1,8 @@
 <x-layout>
     <div class="product">
+        <div class="px-3 mb-2">
+            <a href="/">Back to Products</a>
+        </div>
         <div class="row mb-3">
             <div class="col-md-7">
                 <div class="card mx-auto">
@@ -39,7 +42,7 @@
                 addProductToCart() {
                     axios.post(`/ajax/products/add-to-cart`, {id: this.product.id, quantity: 1})
                         .then(resp => {
-                            console.log(resp);
+                            window.location.href = window.location.href;
                         });
                 }
             },

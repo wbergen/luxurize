@@ -2,7 +2,7 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <a href="{{ route('auth.google') }}" class="btn btn-primary">
+    <a href="{{ route('auth.google') }}" class="btn btn-primary mb-2">
         Login with Google
     </a>
 

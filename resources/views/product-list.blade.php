@@ -5,19 +5,36 @@
                 <div class="card">
                     <h3 class="mb-3">Categories</h3>
                     <ul class="mb-4">
-                        <li>Category 1</li>
-                        <li>Category 2</li>
-                        <li>Category 3</li>
-                    </ul>
-                    <h3 class="mb-3">Tags</h3>
-                    <ul class="mb-4">
                         <li>Tag 1</li>
                         <li>Tag 2</li>
                         <li>Tag 3</li>
                     </ul>
+                    <h3 class="mb-3">Tags</h3>
+                    <ul class="mb-4">
+                        @foreach($tags as $tag)
+                            <li>
+                                <a href="{{ $tag->getUri() }}">{{ $tag->name }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
             <div class="col-md-9">
+                <div class="breadcrumbs">
+                    <div class="row">
+                        <div class="col-auto">
+                            <a href="/">Products</a>
+                        </div>
+                        @if(!empty($breadcrumbs))
+                            @foreach($breadcrumbs as $bc)
+                                <div class="col-auto"><span> > </span></div>
+                                <div class="col-auto">
+                                    <a href="{{ $bc->link }}">{{ $bc->label }}</a>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
                 <div class="row">
                     @foreach($products as $product)
                         <div class="col-md-4 p-3 h-100">
