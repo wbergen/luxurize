@@ -6,7 +6,7 @@
         <div class="row mb-3">
             <div class="col-md-7">
                 <div class="card mx-auto">
-                    <img class="mw-100" src="{{ $product->image }}" alt="{{ $product->name }}">
+                    <img class="mw-100" src="{{ $product->imageUri() }}" alt="{{ $product->name }}">
                 </div>
             </div>
             <div class="col-md-5 flex-grow">

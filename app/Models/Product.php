@@ -52,4 +52,12 @@ class Product extends Model
     {
         return sprintf('/products/%d', $this->id);
     }
+
+    public function imageUri(): string
+    {
+        if (str_starts_with($this->image, '/')) {
+            return sprintf('%s/%s', config('app.image_url'), $this->image);
+        }
+        return $this->image;
+    }
 }

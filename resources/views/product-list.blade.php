@@ -41,7 +41,7 @@
                             <a class="product card d-block h-100" href="{{ $product->getUri() }}">
                                 <h4 class="title mb-2 text-center">{{ $product->name }}</h4>
                                 <div class="p-2 mb-2">
-                                    <img class="mw-100" src="{{ $product->image }}">
+                                    <img class="mw-100" src="{{ $product->imageUri() }}">
                                 </div>
                                 <div class="row justify-content-between">
                                     <div>
