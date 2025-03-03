@@ -2,12 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\UserGroup;
+use App\Models\UserRole;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Seeder;
 
@@ -23,16 +27,37 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Will',
             'email' => 'will@m7c1.com',
+            'role_id' => 3
         ]);
-
-        Product::factory(10)->create();
+        User::factory(10)->create();
 
         OrderStatus::factory()
             ->create(['label' => 'Unfulfilled'])
             ->create(['label' => 'Fullfilled']);
 
-//        Order::factory(10)->create();
 
-        Tag::factory(10)->create();
+//        ProductCategory::factory(10)->for($products)->create();
+
+//        $productCategories = ProductCategory::factory()->create();
+//        Product::factory(10)->for($productCategories)->create();
+
+        $products = Product::factory(10)
+            ->has(Category::factory(7))
+            ->has(Tag::factory(7));
+
+        Order::factory(10)
+            ->has($products)
+            ->create();
+
+
+
+
+        UserGroup::factory()->create(['id' => 1, 'label' => 'Basic'])
+            ->create(['id' => 2, 'label' => 'Power'])
+            ->create(['id' => 3, 'label' => 'Full']);
+        UserRole::factory()
+            ->create(['label' => 'User', 'user_group_id' => 1])
+            ->create(['label' => 'Power User', 'user_group_id' => 2])
+            ->create(['label' => 'Administrator', 'user_group_id' => 3]);
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\Order;
 use App\Models\Promotion;
 
 class PromotionFactory extends Factory
@@ -24,6 +25,7 @@ class PromotionFactory extends Factory
             'name' => fake()->name(),
             'discount_percent' => fake()->randomFloat(4, 0, .9999),
             'discount_value' => fake()->randomFloat(2, 0, 999999.99),
+            'order_id' => Order::factory(),
         ];
     }
 }

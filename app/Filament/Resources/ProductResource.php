@@ -44,10 +44,17 @@ class ProductResource extends Resource
                     ])
                     ->required(),
                 Forms\Components\Select::make('tags')
-                        ->relationship(name: 'tags', titleAttribute: 'name')
+                    ->placeholder('Select one or more Tags')
+                    ->relationship(name: 'tags', titleAttribute: 'name')
                         ->multiple()
                         ->searchable()
                         ->native(false),
+                Forms\Components\Select::make('categories')
+                    ->placeholder('Select one or more Categories')
+                    ->relationship(name: 'categories', titleAttribute: 'label')
+                    ->multiple()
+                    ->searchable()
+                    ->native(false),
                 Forms\Components\Toggle::make('for_sale')
                     ->label('For Sale?')
                     ->default(false),

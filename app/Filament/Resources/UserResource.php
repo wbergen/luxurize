@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\UserOrderResource\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use App\Models\UserRole;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -23,8 +25,16 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
-            ]);
+                Forms\Components\TextInput::make('name'),
+                Forms\Components\TextInput::make('email')->disabled(),
+                Forms\Components\TextInput::make('google_id')->label('Google ID')->disabled(),
+                Forms\Components\TextInput::make('avatar')->label('Google Avatat')->disabled(),
+                Forms\Components\Select::make('avatar')->label('Google Avatat')->disabled(),
+                Forms\Components\Select::make('role_id')
+                    ->relationship(name: 'role', titleAttribute: 'label')
+                    ->native(false)
+
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -33,26 +43,26 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('role.label'),
                 Tables\Columns\TextColumn::make('created_at'),
-
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+//                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+//                Tables\Actions\BulkActionGroup::make([
+//                    Tables\Actions\DeleteBulkAction::make(),
+//                ]),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            OrdersRelationManager::class
         ];
     }
 

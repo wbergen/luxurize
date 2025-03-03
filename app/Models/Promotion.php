@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Promotion extends Model
 {
@@ -19,6 +19,7 @@ class Promotion extends Model
         'name',
         'discount_percent',
         'discount_value',
+        'order_id',
     ];
 
     /**
@@ -30,10 +31,11 @@ class Promotion extends Model
         'id' => 'integer',
         'discount_percent' => 'decimal:4',
         'discount_value' => 'decimal:2',
+        'order_id' => 'integer',
     ];
 
-    public function orders(): BelongsToMany
+    public function order(): BelongsTo
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsTo(Order::class);
     }
 }

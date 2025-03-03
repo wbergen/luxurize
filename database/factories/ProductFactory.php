@@ -25,7 +25,7 @@ class ProductFactory extends Factory
             'description' => fake()->text(),
             'price' => fake()->randomFloat(2, 0, 99.99),
             'for_sale' => fake()->boolean(),
-            'image' => 'https://9ee277280003abc0.nyc3.cdn.digitaloceanspaces.com/luxurize/images/layout/luxurize_logo_sm.webp',
+            'image' => 'https://9ee277280003abc0.nyc3.cdn.digitaloceanspaces.com/luxurize/images/logos/luxurize_logo.png',
         ];
     }
 }

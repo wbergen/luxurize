@@ -14,6 +14,9 @@
 .text-black {
     color: black;
 }
+.text-danger {
+    color: $danger;
+}
 
 
 @each $name, $color in $theme-colors {

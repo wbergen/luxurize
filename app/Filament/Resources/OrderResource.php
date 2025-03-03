@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\OrderProductsResource\RelationManagers\ProductsRelationManager;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderShippingResource\RelationManagers\ShippingRelationManager;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -24,23 +26,15 @@ class OrderResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('id')->disabled()->label('Order Id')->prefix('#'),
-                Forms\Components\Select::make('user_id')
-                        ->searchable(['name', 'email'])
-                        ->disabled()
-                        ->relationship(name: 'user', titleAttribute: 'email')
+                Forms\Components\Select::make('order_status_id')
+                    ->relationship(name: 'orderStatus', titleAttribute: 'label')
                     ->native(false)
                 ,
-                Forms\Components\Select::make('order_status_is')
+                Forms\Components\Select::make('order_status_id')
                     ->relationship(name: 'orderStatus', titleAttribute: 'label')
                 ->native(false)
                 ,
-                Forms\Components\TextInput::make('price')->disabled()->label('Total Price')->prefix('$'),
-                Forms\Components\Select::make('products')
-                    ->disabled()
-                    ->multiple()
-                    ->searchable()
-                    ->relationship(name: 'products', titleAttribute: 'name')
-                    ->native(false)
+                Forms\Components\TextInput::make('price')->disabled()->label('Total Price')->prefix('$')
             ]);
     }
 
@@ -71,7 +65,8 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ShippingRelationManager::class,
+            ProductsRelationManager::class
         ];
     }
 

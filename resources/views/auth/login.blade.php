@@ -1,10 +1,51 @@
+<style>
+    .google {
+        display: block;
+        background-color: rgba(66, 133, 244, .9);
+        color: white;
+        font-weight: bold;
+        margin-bottom: 1rem !important;
+    }
+    .google:hover {
+        background-color: rgba(66, 133, 244, 1);
+    }
+    .google .row {
+        padding: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        background-color: inherit;
+    }
+    .google .row .img {
+        margin-right: 1rem;
+    }
+    .label {
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 1rem !important;
+    }
+</style>
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <a href="{{ route('auth.google') }}" class="btn btn-primary mb-2">
-        Login with Google
+    <div class="label">
+        Login With
+    </div>
+
+    <a href="{{ route('auth.google') }}" class="google btn btn-primary mb-2">
+        <div class="row">
+            <div class="img">
+                <img height="50" src="{{ sprintf('%s/logos/google_logo.svg', config('app.image_url')) }}" alt="Google">
+            </div>
+            <div>Login with Google</div>
+        </div>
+
     </a>
+
+    <div class="label">
+        OR
+    </div>
 
     <form method="POST" action="{{ route('login') }}">
         @csrf

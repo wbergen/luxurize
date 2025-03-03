@@ -18,9 +18,10 @@ class Order extends Model
      */
     protected $fillable = [
         'price',
+        'shipping_id',
+        'promotion_id',
         'order_status_id',
         'user_id',
-        'promotion_id',
     ];
 
     /**
@@ -31,19 +32,25 @@ class Order extends Model
     protected $casts = [
         'id' => 'integer',
         'price' => 'decimal:2',
+        'shipping_id' => 'integer',
+        'promotion_id' => 'integer',
         'order_status_id' => 'integer',
         'user_id' => 'integer',
-        'promotion_id' => 'integer',
     ];
-
-    public function products(): BelongsToMany
-    {
-        return $this->belongsToMany(Product::class);
-    }
 
     public function orderStatus(): BelongsTo
     {
         return $this->belongsTo(OrderStatus::class);
+    }
+
+    public function shipping(): BelongsTo
+    {
+        return $this->belongsTo(Shipping::class);
+    }
+
+    public function promotion(): BelongsTo
+    {
+        return $this->belongsTo(Promotion::class);
     }
 
     public function user(): BelongsTo
@@ -51,8 +58,8 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function promotion(): BelongsTo
+    public function products(): BelongsToMany
     {
-        return $this->belongsTo(Promotion::class);
+        return $this->belongsToMany(Product::class);
     }
 }

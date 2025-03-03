@@ -5,9 +5,11 @@
                 <div class="card">
                     <h3 class="mb-3">Categories</h3>
                     <ul class="mb-4">
-                        <li>Tag 1</li>
-                        <li>Tag 2</li>
-                        <li>Tag 3</li>
+                        @foreach($categories as $category)
+                            <li>
+                                <a href="{{ $category->getUri() }}">{{ $category->name }}</a>
+                            </li>
+                        @endforeach
                     </ul>
                     <h3 class="mb-3">Tags</h3>
                     <ul class="mb-4">

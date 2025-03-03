@@ -10,6 +10,16 @@ class ListTags extends ListRecords
 {
     protected static string $resource = TagResource::class;
 
+    protected function getDefaultTableSortColumn(): ?string
+    {
+        return 'product_count';
+    }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'desc';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

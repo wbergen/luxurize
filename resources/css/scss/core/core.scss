@@ -18,7 +18,9 @@
 @import "color";
 @import "headings";
 @import "tables";
-@import "_dropdowns.scss";
+@import "dropdowns";
+@import "forms";
+@import "alert";
 
 body {
     background-color: $body-bg;

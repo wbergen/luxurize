@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Order;
 use App\Models\OrderStatus;
-use App\Models\Promotion;
 use App\Models\User;
 
 class OrderFactory extends Factory
@@ -24,10 +23,9 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'price' => fake()->randomFloat(2, 0, 999999.99),
+            'price' => fake()->randomFloat(2, 0, 10.99),
             'order_status_id' => OrderStatus::factory(),
             'user_id' => User::factory(),
-            'promotion_id' => Promotion::factory(),
         ];
     }
 }

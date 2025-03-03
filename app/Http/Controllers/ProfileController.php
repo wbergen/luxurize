@@ -21,6 +21,13 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function orders(Request $request): View
+    {
+        return view('profile.orders', [
+            'user' => $request->user(),
+        ]);
+    }
+
     /**
      * Update the user's profile information.
      */

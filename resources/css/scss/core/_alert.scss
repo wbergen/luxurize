@@ -1,0 +1,19 @@
+.alert {
+    border-radius: .25rem;
+    padding: .5rem .75rem;
+    &.danger {
+        background-color: lighten($danger, 35%);
+        color: darken($danger, 15%);
+        box-shadow: 0 0 0 .15rem $danger;
+    }
+    &.success {
+        background-color: lighten($success, 35%);
+        color: darken($success, 15%);
+        box-shadow: 0 0 0 .15rem $success;
+    }
+    &.warning {
+        background-color: lighten($warning, 35%);
+        color: darken($warning, 15%);
+        box-shadow: 0 0 0 .25rem $warning;
+    }
+}

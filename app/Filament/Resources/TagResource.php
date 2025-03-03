@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\TagProductResource\RelationManagers\ProductsRelationManager;
 use App\Filament\Resources\TagResource\Pages;
 use App\Filament\Resources\TagResource\RelationManagers;
 use App\Models\Tag;
@@ -31,8 +32,9 @@ class TagResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('id')->sortable(),
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('products_count')->counts('products')->sortable()
             ])
             ->filters([
                 //
@@ -50,7 +52,7 @@ class TagResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ProductsRelationManager::class,
         ];
     }
 

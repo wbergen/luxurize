@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\Shipping;
 use App\Models\ShoppingCart;
 use Braintree\Gateway;
 use Illuminate\Http\Request;
@@ -23,10 +24,22 @@ class PaymentController extends Controller
 
         $validated = $request->validate([
             'paymentMethodNonce' => 'required',
-            'cartId' => 'required|numeric'
+            'cartId' => 'required|numeric',
+            'shipping' => 'required|array'
         ]);
 
         $cart = ShoppingCart::find($validated['cartId']);
+
+        $shipping = new Shipping([
+            'address' => $validated['shipping']['addr'],
+            'address_two' => $validated['shipping']['addr2'],
+            'city' => $validated['shipping']['city'],
+            'state' => $validated['shipping']['state'],
+            'zip' => $validated['shipping']['zip'],
+            'country' => $validated['shipping']['country'],
+            'user_id' => Auth::user()->id
+        ]);
+        $shipping->save();
 
         // Then, create a transaction:
         $result = $gateway->transaction()->sale([
@@ -45,10 +58,11 @@ class PaymentController extends Controller
                 'price' => $cart->products()->sum('price')
             ]);
             $order->save();
+            $order->shipping()->associate($shipping);
             $order->products()->saveMany($cart->products()->get());
             $order->save();
             $cart->delete();
-            return ['success' => $result->success, 'orderId' => $order->id];
+            return ['success' => $result->success, 'orderId' => $order->id, 'result' => $result];
         }
         return ['success' => 'false'];
     }
