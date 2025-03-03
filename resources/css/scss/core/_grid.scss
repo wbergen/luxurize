@@ -5,6 +5,7 @@
   padding-right: $gutter_size;
   padding-left: $gutter_size;
 }
+
 @each $gridSizeKey, $gridWidth in $grid-breakpoints {
   @for $size from 2 through 12 {
     $size_per: calc((100 / 12) * $size) * 1%;
@@ -80,4 +81,18 @@
 }
 .justify-content-end {
     justify-content: end;
+}
+
+/* Flex Utilities */
+.flex-row-reverse {
+    flex-direction: row-reverse;
+}
+.flex-row {
+    flex-direction: row;
+}
+.flex-row-column {
+    flex-direction: column;
+}
+.flex-row-column-reverse {
+    flex-direction: column-reverse;
 }

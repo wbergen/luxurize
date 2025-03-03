@@ -7,7 +7,7 @@
                     <ul class="mb-4">
                         @foreach($categories as $category)
                             <li>
-                                <a href="{{ $category->getUri() }}">{{ $category->name }}</a>
+                                <a href="{{ $category->getUri() }}">{{ $category->label }}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -22,14 +22,18 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="breadcrumbs">
-                    <div class="row">
+                <div class="breadcrumbs card mx-3">
+                    <div class="row align-items-center">
                         <div class="col-auto">
-                            <a href="/">Products</a>
+                            <a href="/"><i class="fas fa-home"></i></a>
+                        </div>
+                        <div class="col-auto px-1"><span><i class="fas fa-caret-right"></i></span></div>
+                        <div class="col-auto">
+                            <a href="/">All Products</a>
                         </div>
                         @if(!empty($breadcrumbs))
                             @foreach($breadcrumbs as $bc)
-                                <div class="col-auto"><span> > </span></div>
+                                <div class="col-auto px-1"><span><i class="fas fa-caret-right"></i></span></div>
                                 <div class="col-auto">
                                     <a href="{{ $bc->link }}">{{ $bc->label }}</a>
                                 </div>

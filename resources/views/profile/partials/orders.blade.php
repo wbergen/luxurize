@@ -27,6 +27,15 @@
                         <td>${{ $order->price }}</td>
                         <td>{{ $order->orderStatus()->get()->first()->label }}</td>
                     </tr>
+                    <tr>
+                        <td colspan="3">
+                            <ul>
+                                @foreach ($order->products()->get() as $product)
+                                    <li><a href="{{ $product->getUri() }}">{{ $product->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

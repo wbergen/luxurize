@@ -10,8 +10,13 @@
             <div class="mr-2">
                 @auth
                     <div class="row align-items-center">
+                        @if(\Illuminate\Support\Facades\Auth::user()->role_id == 3)
+                            <div class="mx-2">
+                                <a class="btn" href="/admin">Admin</a>
+                            </div>
+                        @endif
                         <div class="mx-2">
-                            <div class="shopping-cart dropdown row" href="/checkout">
+                            <div class="shopping-cart dropdown row btn" href="/checkout">
                                 <div class="mr-2">
                                     <i class="fas fa-shopping-cart"></i>
                                 </div>
@@ -30,7 +35,7 @@
                                                     <div class="col-md-3 mb-4 text-right">${{ $product->price }}</div>
                                                 @endforeach
                                             </div>
-                                            <a class="d-block text-right" href="/checkout">Checkout Now!</a>
+                                            <a class="d-block text-right btn btn-primary" href="/checkout">Checkout Now!</a>
                                         </div>
 
                                     @endif
@@ -39,7 +44,7 @@
                         </div>
                         <div class="mx-2">
                             <a href="/dashboard">
-                                {{ \Illuminate\Support\Facades\Auth::user()->email }}
+                                <i class="fas fa-tachometer-alt"></i>
                             </a>
                         </div>
                     </div>

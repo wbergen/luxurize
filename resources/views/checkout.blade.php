@@ -49,7 +49,7 @@
                 <div id="dropin-wrapper">
                     <div id="checkout-message"></div>
                     <div id="dropin-container"></div>
-                    <button :disabled="processing" id="pp-submit-button" class="w-100 bg-primary">
+                    <button :disabled="processing" id="pp-submit-button" class="w-100 btn btn-primary">
                         <span v-if="processing"><i class="fas fa-circle-notch fa-spin fa-2x"></i></span>
                         <span v-else>Complete Checkout!</span>
                     </button>

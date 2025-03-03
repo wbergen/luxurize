@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ShoppingCart;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -16,18 +18,31 @@ class ProductController extends Controller
     {
         if (!is_null($tag_id)) {
             $tag = Tag::find($tag_id);
-            $products = $tag->products()->get();
+            $products = $tag?->products()?->get() ?? new Collection();
         } else {
             $products = Product::all();
         }
-        return view('product-list', ['products' => $products, 'tags' => Tag::all(), 'breadcrumbs' => [
+        return view('product-list', ['products' => $products, 'categories' => Category::all(), 'tags' => Tag::all(), 'breadcrumbs' => [
             'tags' => (object)['label' => sprintf('Tag: %s', $tag->name), 'link' => sprintf('/products/tags/%d', $tag->id)]
+        ]]);
+    }
+
+    public function categoryView(Request $request, $category_id = null): View
+    {
+        if (!is_null($category_id)) {
+            $category = Category::find($category_id);
+            $products = $category?->products()?->get() ?? new Collection();
+        } else {
+            $products = Product::all();
+        }
+        return view('product-list', ['products' => $products, 'tags' => Tag::all(), 'categories' => Category::all(), 'breadcrumbs' => [
+            'categories' => (object)['label' => sprintf('Category: %s', $category->label), 'link' => sprintf('/products/categories/%d', $category->id)]
         ]]);
     }
 
     public function listView(Request $request): View
     {
-        return view('product-list', ['products' => Product::all(), 'tags' => Tag::all(), 'breadcrumbs' => []]);
+        return view('product-list', ['products' => Product::all(), 'tags' => Tag::all(), 'categories' => Category::all(), 'breadcrumbs' => []]);
     }
 
     public function detailView(Request $request, $id): View

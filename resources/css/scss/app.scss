@@ -2,12 +2,13 @@
 
 // Vars
 //@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Rubik+Bubbles&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 
-$deep-sky-blue: #1fc3fbff;
-$prussian-blue: #062e40ff;
+//$deep-sky-blue: #1fc3fbff;
+//$prussian-blue: #062e40ff;
 $magnolia: #f3eff5ff;
-$apple-green: #72b01dff;
+//$apple-green: #72b01dff;
 
 $xanthous: #e6af2e;
 $cadet: #8aa1b1;
@@ -19,12 +20,16 @@ $dark: $ebony;
 $success: darkgreen;
 
 $body-bg: $magnolia;
-$font-family: "Lora", serif;
+$font-family: "Figtree", serif;
 
 @import "core/core";
 
 .shadow {
-    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+    // tailwind sm
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+    // from old
+    //box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
 }
 
 a {
@@ -35,14 +40,19 @@ a {
     }
 }
 
-button {
+button, .btn {
     cursor: pointer;
     background-color: white;
-    border: 1px solid $primary;
     padding: .5rem .5rem;
     font-weight: 600;
-    &:hover {
-        background-color: darken(white, 7%);
+    &:hover, &:focus {
+        color: white;
+        background-color: lighten($primary, .5);
+        //background-color: darken(white, 7%);
+        box-shadow: 0 0 0 .05rem $primary;
+    }
+    &.btn-primary {
+        border: 1px solid $primary;
     }
 }
 
@@ -68,13 +78,37 @@ body {
         .card {
             background: white;
             padding: .5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
         }
 
         a.product {
             color: black;
             .title {
-                font-size: 1.5rem;
+                font-size: 1.25rem;
             }
+            &:hover, &:focus {
+                color: #212529;
+                background-color: #fff;
+                border-color: $primary;
+                outline: 0;
+                box-shadow: 0 0 0 .15rem lighten($primary, 25%);
+            }
+        }
+
+        .breadcrumbs {
+            background-color: $light;
+        }
+
+        .product-list {
+            &>.row {
+                flex-direction: column-reverse;
+            }
+            @include media-larger-than(md) {
+                &>.row {
+                    flex-direction: row;
+                }
+            }
+
         }
     }
 }

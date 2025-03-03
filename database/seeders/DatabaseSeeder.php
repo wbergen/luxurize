@@ -41,11 +41,11 @@ class DatabaseSeeder extends Seeder
 //        $productCategories = ProductCategory::factory()->create();
 //        Product::factory(10)->for($productCategories)->create();
 
-        $products = Product::factory(10)
-            ->has(Category::factory(7))
-            ->has(Tag::factory(7));
+        $products = Product::factory(6)
+            ->has(Category::factory(2))
+            ->has(Tag::factory(4));
 
-        Order::factory(10)
+        Order::factory(4)
             ->has($products)
             ->create();
 

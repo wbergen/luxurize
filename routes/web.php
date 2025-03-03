@@ -12,6 +12,7 @@ Route::get('/', [\App\Http\Controllers\ProductController::class, 'listView']);
 Route::prefix('products')
     ->group(function() {
         Route::get('tags/{tag_id}', [\App\Http\Controllers\ProductController::class, 'tagView'])->whereNumber('tag_id');
+        Route::get('categories/{category_id}', [\App\Http\Controllers\ProductController::class, 'categoryView'])->whereNumber('category_id');
         Route::get('{id}', [\App\Http\Controllers\ProductController::class, 'detailView'])->whereNumber('id');
     });
 Route::prefix('ajax')
