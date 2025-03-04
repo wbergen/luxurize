@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class PaymentController extends Controller
+class BrainTreeController extends Controller
 {
     public function process(Request $request): array
     {

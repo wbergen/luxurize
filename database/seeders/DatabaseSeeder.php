@@ -31,8 +31,9 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
 
         OrderStatus::factory()
-            ->create(['label' => 'Unfulfilled'])
-            ->create(['label' => 'Fullfilled']);
+            ->create(['label' => 'Wating On Provider'])     // 1
+            ->create(['label' => 'Unfulfilled'])            // 2
+            ->create(['label' => 'Fullfilled']);            // 3
 
 
 //        ProductCategory::factory(10)->for($products)->create();

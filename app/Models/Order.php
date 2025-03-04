@@ -20,6 +20,7 @@ class Order extends Model
         'price',
         'shipping_id',
         'promotion_id',
+        'provider_order_id',
         'order_status_id',
         'user_id',
     ];
@@ -34,6 +35,7 @@ class Order extends Model
         'price' => 'decimal:2',
         'shipping_id' => 'integer',
         'promotion_id' => 'integer',
+        'provider_order_id' => 'integer',
         'order_status_id' => 'integer',
         'user_id' => 'integer',
     ];
@@ -56,6 +58,11 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function providerOrder(): BelongsTo
+    {
+        return $this->belongsTo(ProviderOrder::class);
     }
 
     public function products(): BelongsToMany

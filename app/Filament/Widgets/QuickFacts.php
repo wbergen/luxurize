@@ -15,6 +15,7 @@ class QuickFacts extends BaseWidget
     protected function getStats(): array
     {
         return [
+            Stat::make('Total Sales', Order::where('order_status_id', 2)->get()->sum('price')),
             Stat::make('Total Products', Product::count()),
             Stat::make('Total Orders', Order::count()),
             Stat::make('Total Users', User::count())

@@ -26,18 +26,30 @@ Route::prefix('ajax')
 
 Route::prefix('payments')
     ->group(function() {
-        Route::post('process', [\App\Http\Controllers\PaymentController::class, 'process']);
+        Route::prefix('bt')
+            ->group(function() {
+                Route::post('process', [\App\Http\Controllers\BrainTreeController::class, 'process']);
+            });
+        Route::prefix('pp')
+            ->group(function() {
+                Route::post('create', [\App\Http\Controllers\PayPalController::class, 'create']);
+                Route::post('capture', [\App\Http\Controllers\PayPalController::class, 'capture']);
+            });
     });
 
 
-Route::get('checkout', function() {
+Route::get('checkout-braintree', function() {
     $gateway = new Braintree\Gateway([
         'environment' => config('payments.braintree.env'),
         'merchantId' => config('payments.braintree.id'),
         'publicKey' => config('payments.braintree.pub_key'),
         'privateKey' => config('payments.braintree.private_key')
     ]);
-    return view('checkout', ['nonce' => $gateway->clientToken()->generate()]);
+    return view('checkout-braintree', ['nonce' => $gateway->clientToken()->generate()]);
+});
+
+Route::get('checkout', function() {
+    return view('checkout', []);
 });
 
 Route::get('thankyou', function() {

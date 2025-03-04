@@ -45,7 +45,9 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('price'),
                 Tables\Columns\TextColumn::make('user.email'),
-                Tables\Columns\TextColumn::make('orderStatus.label'),
+                Tables\Columns\TextColumn::make('orderStatus.label')->label('Status'),
+                Tables\Columns\TextColumn::make('providerOrder.provider_id')->label('Prov.ID'),
+                Tables\Columns\TextColumn::make('providerOrder.provider_status')->label('Prov.Status'),
                 Tables\Columns\TextColumn::make('created_at'),
                 ])
             ->filters([

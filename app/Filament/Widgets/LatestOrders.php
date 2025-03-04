@@ -18,11 +18,11 @@ class LatestOrders extends BaseWidget
         return $table
             ->query(Order::query())
             ->columns([
+                Tables\Columns\TextColumn::make('created_at')->date('m/d h:i A')->label('Timestamp'),
+                Tables\Columns\TextColumn::make('price'),
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('user.email'),
-                Tables\Columns\TextColumn::make('price'),
-                Tables\Columns\TextColumn::make('created_at')->label('Timestamp')
-            ]);
+            ])->defaultSort('created_at', 'desc');
     }
 }

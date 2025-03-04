@@ -1,4 +1,4 @@
-<x-layout>
+<x-main-layout>
     <div class="product-list">
         <div class="row">
             <div class="col-md-3">
@@ -62,4 +62,4 @@
             </div>
         </div>
     </div>
-</x-layout>
+</x-main-layout>

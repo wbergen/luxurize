@@ -1,5 +1,5 @@
 <x-layout>
-    <div id="checkout" class="checkout">
+    <div id="checkout" class="checkout" v-cloak>
         <div class="card mb-4">
             <h2>Your Cart:</h2>
             <table class="table striped">
@@ -29,7 +29,7 @@
         </div>
 
         <div v-if="canCheckout">
-            <div class="card mb-4">
+            <div v-if="false" class="card mb-4">
                 <h4 class="mb-4">Shipping Information</h4>
                 <h4 class="alert danger mb-4" v-show="hasShippingErrors">Please Enter a Valid Shipping Address below to continue</h4>
                 <form class="grid-form">
@@ -43,18 +43,6 @@
 
                 </form>
             </div>
-
-            <div class="card">
-                <h4 class="">Card Information:</h4>
-                <div id="dropin-wrapper">
-                    <div id="checkout-message"></div>
-                    <div id="dropin-container"></div>
-                    <button :disabled="processing" id="pp-submit-button" class="w-100 btn btn-primary">
-                        <span v-if="processing"><i class="fas fa-circle-notch fa-spin fa-2x"></i></span>
-                        <span v-else>Complete Checkout!</span>
-                    </button>
-                </div>
-            </div>
         </div>
         <div v-else>
             <div class="card">
@@ -62,7 +50,14 @@
             </div>
         </div>
     </div>
+    <div class="card">
+        <div class="row">
+            <div class="col mx-auto" id="paypal-button-container"></div>
+        </div>
+    </div>
 </x-layout>
+<!-- Initialize the JS-SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=Ae-WJPXj3A7GbB9Aq3P5v2bJEcpQzEGNpunLAhdR5j3yp3gYpDbB25Ks1yCub9jWiRCii9yJjaebsdTO&buyer-country=US&currency=USD&components=buttons&enable-funding=venmo,paylater,card" data-sdk-integration-source="developer-studio"></script>
 <script>
     function initMap() {
         const input = document.getElementById("shipping-input");
@@ -82,6 +77,128 @@
             document.dispatchEvent(new CustomEvent('shipping-entered', {detail: {place}}));
         });
     }
+
+    const setupPaypalCheckout = () => {
+        window.paypal
+            .Buttons({
+                style: {
+                    shape: "rect",
+                    layout: "vertical",
+                    color: "gold",
+                    label: "paypal",
+                    disableMaxWidth: true,
+                },
+                message: {
+                    amount: @json(app('cart')->products()->get()->sum('price')),
+                } ,
+
+                async createOrder() {
+                    try {
+                        const cart = @json(app('cart'));
+                        const response = await fetch("/payments/pp/create", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                            },
+                            // use the "body" param to optionally pass additional order information
+                            // like product ids and quantities
+                            body: JSON.stringify({
+                                cartId: cart?.id,
+                            })
+                        });
+
+                        const result = await response.json();
+                        const orderData = result.data;
+
+                        if (orderData.id) {
+                            return orderData.id;
+                        }
+                        const errorDetail = orderData?.details?.[0];
+                        const errorMessage = errorDetail
+                            ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                            : JSON.stringify(orderData);
+
+                        throw new Error(errorMessage);
+                    } catch (error) {
+                        console.error(error);
+                        // resultMessage(`Could not initiate PayPal Checkout...<br><br>${error}`);
+                    }
+                } ,
+
+                async onApprove(data, actions) {
+                    try {
+                        console.log(data, actions);
+                        const cart = @json(app('cart'));
+                        const response = await fetch(
+                            `/payments/pp/capture`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                },
+                                body: JSON.stringify({
+                                    orderId: data.orderID
+                                })
+                            }
+                        );
+
+                        const result = await response.json();
+                        const orderData = result.data;
+                        // Three cases to handle:
+                        //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                        //   (2) Other non-recoverable errors -> Show a failure message
+                        //   (3) Successful transaction -> Show confirmation or thank you message
+
+                        const errorDetail = orderData?.details?.[0];
+
+                        if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
+                            // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                            // recoverable state, per
+                            // https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+                            return actions.restart();
+                        } else if (errorDetail) {
+                            // (2) Other non-recoverable errors -> Show a failure message
+                            throw new Error(
+                                `${errorDetail.description} (${orderData.debug_id})`
+                            );
+                        } else if (!orderData.purchase_units) {
+                            throw new Error(JSON.stringify(orderData));
+                        } else {
+                            // (3) Successful transaction -> Show confirmation or thank you message
+                            // Or go to another URL:  actions.redirect('thank_you.html');
+                            const transaction =
+                                orderData?.purchase_units?.[0]?.payments
+                                    ?.captures?.[0] ||
+                                orderData?.purchase_units?.[0]?.payments
+                                    ?.authorizations?.[0];
+                            //               resultMessage(
+                            //                   `Transaction ${transaction.status}: ${transaction.id}<br>
+                            // <br>See console for all available details`
+                            //               );
+
+                            window.location.href = '/thankyou';
+
+                            // console.log(
+                            //     "Capture result",
+                            //     orderData,
+                            //     JSON.stringify(orderData, null, 2)
+                            // );
+                            // TODO Done, go to thankyou
+                        }
+                    } catch (error) {
+                        // TODO Better handle errors?
+                        console.error(error);
+                        // resultMessage(
+                        //     `Sorry, your transaction could not be processed...<br><br>${error}`
+                        // );
+                    }
+                } ,
+            })
+            .render("#paypal-button-container");
+    };
+
 
     document.addEventListener('app-loaded', () => {
         const ppCheckout = createApp({
@@ -110,92 +227,52 @@
                 }
             },
             mounted() {
-                document.addEventListener('shipping-entered', evt => {
-                    this.updateShippingFromPlaces(evt.detail.place);
-                });
-                const that = this;
-                const ppButton = document.querySelector('#pp-submit-button');
-                braintree.dropin.create({
-                    // Insert your tokenization key here
-                    authorization: '{{ $nonce }}',
-                    container: '#dropin-container'
-                }, function (createErr, instance) {
-                    ppButton.addEventListener('click', function () {
-                        if (that.valid()) {
-                            instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-                                // When the user clicks on the 'Submit payment' button this code will send the
-                                // encrypted payment information in a variable called a payment method nonce
-                                if (payload) {
-                                    that.processing = true;
-                                    axios.post("/payments/process", {
-                                        'paymentMethodNonce': payload.nonce,
-                                        cartId: that.cart.id,
-                                        shipping: that.shipping,
-                                    })
-                                        .then(resp => {
-                                            // Tear down the Drop-in UI
-                                            instance.teardown(function (teardownErr) {
-                                                if (teardownErr) {
-                                                    console.error('Could not tear down Drop-in UI!');
-                                                } else {
-                                                    console.info('Drop-in UI has been torn down!');
-                                                    // Remove the 'Submit payment' button
-                                                    document.querySelector('#pp-submit-button').remove();
-                                                }
-                                            });
-
-                                            if (resp.data.success) {
-                                                // window.location.href = '/thankyou';
-                                            } else {
-                                                console.error("something happened on the server");
-                                            }
-                                        })
-                                }
-                            });
-                        }
-                    });
-                });
-
+                // document.addEventListener('shipping-entered', evt => {
+                //     this.updateShippingFromPlaces(evt.detail.place);
+                // });
+                if (this.canCheckout) {
+                    setupPaypalCheckout();
+                }
             },
             methods: {
-                valid() {
-                    let valid = true;
-                    this.v = {};
-                    for (let [key, val] of Object.entries(this.shipping)) {
-                        switch (key) {
-                            case "country":
-                            case "addr2":
-                                break;
-                            default:
-                                if (!val) {
-                                    valid = this.v[key] = false;
-                                }
-                        }
-                    }
-                    console.log(this.v);
-                    return valid;
-                },
-                getPlaceComponentByName(place, compName, longName = true) {
-                    console.log(place.address_components);
-                    const c = place.address_components.find(c => c.types.includes(compName));
-                    if (longName) {
-                        return c?.long_name ?? "";
-                    }
-                    return c?.short_name ?? "";
-                },
-                updateShippingFromPlaces(place) {
-                    this.shipping.addr = `${this.getPlaceComponentByName(place, "street_number")} ${this.getPlaceComponentByName(place, "route")}`;
-                    this.shipping.addr2 = `${this.getPlaceComponentByName(place, "subpremise")}`;
-                    this.shipping.city = `${this.getPlaceComponentByName(place, "locality")}`;
-                    this.shipping.state = `${this.getPlaceComponentByName(place, "administrative_area_level_1", false)}`;
-                    this.shipping.zip = `${this.getPlaceComponentByName(place, "postal_code")}`;
-                    this.shipping.country = `${this.getPlaceComponentByName(place, "country")}`;
-
-                    console.log(this.shipping);
-                    // place.address_components.forEach(c => {
-                    //
-                    // });
-                },
+                // valid() {
+                //     let valid = true;
+                //     this.v = {};
+                //     for (let [key, val] of Object.entries(this.shipping)) {
+                //         switch (key) {
+                //             case "country":
+                //             case "addr2":
+                //                 break;
+                //             default:
+                //                 if (!val) {
+                //                     valid = this.v[key] = false;
+                //                 }
+                //         }
+                //     }
+                //     console.log(this.v);
+                //     return valid;
+                // },
+                // getPlaceComponentByName(place, compName, longName = true) {
+                //     console.log(place.address_components);
+                //     const c = place.address_components.find(c => c.types.includes(compName));
+                //     if (longName) {
+                //         return c?.long_name ?? "";
+                //     }
+                //     return c?.short_name ?? "";
+                // },
+                // updateShippingFromPlaces(place) {
+                //     this.shipping.addr = `${this.getPlaceComponentByName(place, "street_number")} ${this.getPlaceComponentByName(place, "route")}`;
+                //     this.shipping.addr2 = `${this.getPlaceComponentByName(place, "subpremise")}`;
+                //     this.shipping.city = `${this.getPlaceComponentByName(place, "locality")}`;
+                //     this.shipping.state = `${this.getPlaceComponentByName(place, "administrative_area_level_1", false)}`;
+                //     this.shipping.zip = `${this.getPlaceComponentByName(place, "postal_code")}`;
+                //     this.shipping.country = `${this.getPlaceComponentByName(place, "country")}`;
+                //
+                //     console.log(this.shipping);
+                //     // place.address_components.forEach(c => {
+                //     //
+                //     // });
+                // },
             },
         }).mount("#checkout");
 

@@ -1,7 +1,7 @@
-<x-layout>
+<x-main-layout>
     <div class="product">
-        <div class="px-3 mb-2">
-            <a href="/">Back to Products</a>
+        <div class="card row mx-3 mb-2">
+            <a href="/"><i class="fas pr-1 fa-caret-left"></i> Back to Products</a>
         </div>
         <div class="row mb-3">
             <div class="col-md-7">
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-</x-layout>
+</x-main-layout>
 
 <script>
     document.addEventListener('app-loaded', () => {

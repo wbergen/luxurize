@@ -25,7 +25,7 @@
                                         <div>Cart is Empty!</div>
                                     @else
                                         <div>({{ app('cart')->products()->count() }})</div>
-                                        <div class="dropdown-content left p-3 text-black">
+                                        <div class="dropdown-content left p-3 text-black shadow">
                                             <h4 class="mb-4">Currently in your cart:</h4>
                                             <div class="row">
                                                 @foreach(app('cart')->products()->get() as $index => $product)
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="mx-2">
-                            <a href="/dashboard">
+                            <a class="btn" href="/dashboard">
                                 <i class="fas fa-tachometer-alt"></i>
                             </a>
                         </div>

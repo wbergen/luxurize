@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
-    @include('components.layout.head')
+    @include('layouts.main.head')
     <body class="">
         @php
 
         @endphp
-        @include('components.layout.header')
+        @include('layouts.main.header')
         <div class="page-content">
             {{ $slot }}
         </div>
-        @include('components.layout.footer')
+        @include('layouts.main.footer')
     </body>
 </html>
