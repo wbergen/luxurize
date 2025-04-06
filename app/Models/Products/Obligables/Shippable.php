@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Products\Obligables;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ShoppingCart extends Model
+class Shippable extends Obligable
 {
     use HasFactory;
 
@@ -16,7 +16,8 @@ class ShoppingCart extends Model
      * @var array
      */
     protected $fillable = [
-        'session_id',
+        'obligation_id',
+        'shipping_id',
     ];
 
     /**
@@ -26,10 +27,12 @@ class ShoppingCart extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'obligation_id' => 'integer',
+        'shipping_id' => 'integer',
     ];
 
-    public function products(): BelongsToMany
+    public function shipping(): BelongsTo
     {
-        return $this->belongsToMany(\App\Models\Products\Product::class);
+        return $this->belongsTo(\App\Models\Shipping::class);
     }
 }

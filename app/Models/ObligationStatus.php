@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class ShoppingCart extends Model
+class ObligationStatus extends Model
 {
     use HasFactory;
 
@@ -16,7 +15,7 @@ class ShoppingCart extends Model
      * @var array
      */
     protected $fillable = [
-        'session_id',
+        'label',
     ];
 
     /**
@@ -27,9 +26,4 @@ class ShoppingCart extends Model
     protected $casts = [
         'id' => 'integer',
     ];
-
-    public function products(): BelongsToMany
-    {
-        return $this->belongsToMany(\App\Models\Products\Product::class);
-    }
 }

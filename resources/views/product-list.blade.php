@@ -5,19 +5,19 @@
                 <div class="card">
                     <h3 class="mb-3">Categories</h3>
                     <ul class="mb-4">
-                        @foreach($categories as $category)
-                            <li>
-                                <a href="{{ $category->getUri() }}">{{ $category->label }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                    <h3 class="mb-3">Tags</h3>
-                    <ul class="mb-4">
-                        @foreach($tags as $tag)
-                            <li>
-                                <a href="{{ $tag->getUri() }}">{{ $tag->name }}</a>
-                            </li>
-                        @endforeach
+{{--                        @foreach($categories as $category)--}}
+{{--                            <li>--}}
+{{--                                <a href="{{ $category->getUri() }}">{{ $category->label }}</a>--}}
+{{--                            </li>--}}
+{{--                        @endforeach--}}
+{{--                    </ul>--}}
+{{--                    <h3 class="mb-3">Tags</h3>--}}
+{{--                    <ul class="mb-4">--}}
+{{--                        @foreach($tags as $tag)--}}
+{{--                            <li>--}}
+{{--                                <a href="{{ $tag->getUri() }}">{{ $tag->name }}</a>--}}
+{{--                            </li>--}}
+{{--                        @endforeach--}}
                     </ul>
                 </div>
             </div>

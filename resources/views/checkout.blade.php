@@ -1,4 +1,4 @@
-<x-layout>
+<x-main-layout>
     <div id="checkout" class="checkout" v-cloak>
         <div class="card mb-4">
             <h2>Your Cart:</h2>
@@ -55,7 +55,7 @@
             <div class="col mx-auto" id="paypal-button-container"></div>
         </div>
     </div>
-</x-layout>
+</x-main-layout>
 <!-- Initialize the JS-SDK -->
 <script src="https://www.paypal.com/sdk/js?client-id=Ae-WJPXj3A7GbB9Aq3P5v2bJEcpQzEGNpunLAhdR5j3yp3gYpDbB25Ks1yCub9jWiRCii9yJjaebsdTO&buyer-country=US&currency=USD&components=buttons&enable-funding=venmo,paylater,card" data-sdk-integration-source="developer-studio"></script>
 <script>

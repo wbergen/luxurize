@@ -31,6 +31,7 @@ class ProductsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('productType.label'),
                 Tables\Columns\TextColumn::make('price'),
             ])
             ->filters([

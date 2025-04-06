@@ -2,11 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OrderProductsResource\RelationManagers\ProductsRelationManager;
-use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers;
-use App\Filament\Resources\OrderShippingResource\RelationManagers\ShippingRelationManager;
-use App\Models\Order;
+use App\Filament\Resources\ObligationResource\Pages;
+use App\Filament\Resources\ObligationResource\RelationManagers;
+use App\Models\Obligation;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class OrderResource extends Resource
+class ObligationResource extends Resource
 {
-    protected static ?string $model = Order::class;
+    protected static ?string $model = Obligation::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,7 +23,7 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')->disabled()->label('Order Id')->prefix('#'),
+                Forms\Components\TextInput::make('id')->disabled()->label('Obligation Id')->prefix('#'),
 //                Forms\Components\Select::make('order_status_id')
 //                    ->relationship(name: 'orderStatus', titleAttribute: 'label')
 //                    ->native(false)
@@ -34,8 +32,7 @@ class OrderResource extends Resource
 //                    ->relationship(name: 'orderStatus', titleAttribute: 'label')
 //                ->native(false)
 //                ,
-                Forms\Components\TextInput::make('price')->disabled()->label('Total Price')->prefix('$')
-            ]);
+                Forms\Components\TextInput::make('order.price')->disabled()->label('Total Price')->prefix('$')            ]);
     }
 
     public static function table(Table $table): Table
@@ -43,13 +40,14 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('price')->prefix('$')->color('success'),
+                Tables\Columns\TextColumn::make('order.price')->label('Price')->prefix('$')->color('success'),
                 Tables\Columns\TextColumn::make('user.email'),
-                Tables\Columns\TextColumn::make('paymentRecord.providerRecord.provider_id')->label('Provider ID'),
-                Tables\Columns\TextColumn::make('obligation.id')->label('Obligation'),
+                Tables\Columns\TextColumn::make('obligationStatus.label')->label('Status'),
+                Tables\Columns\TextColumn::make('order.paymentRecord.providerRecord.provider_id')->label('Prov.Payment Id'),
+//                Tables\Columns\TextColumn::make('providerOrder.provider_id')->label('Prov.ID'),
 //                Tables\Columns\TextColumn::make('providerOrder.provider_status')->label('Prov.Status'),
                 Tables\Columns\TextColumn::make('created_at'),
-                ])
+            ])
             ->filters([
                 //
             ])
@@ -60,24 +58,22 @@ class OrderResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])
-            ->defaultSort('created_at', 'desc');
+            ]);
     }
 
     public static function getRelations(): array
     {
         return [
-//            ShippingRelationManager::class,
-            ProductsRelationManager::class
+            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrders::route('/'),
-            'create' => Pages\CreateOrder::route('/create'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
+            'index' => Pages\ListObligations::route('/'),
+            'create' => Pages\CreateObligation::route('/create'),
+            'edit' => Pages\EditObligation::route('/{record}/edit'),
         ];
     }
 }

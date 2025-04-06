@@ -1,21 +1,21 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Products;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\;
-use App\Models\Order;
+use App\Models\Products\Product;
+use App\Models\Products\Review;
 use App\Models\User;
 
-class OrderFactory extends Factory
+class ReviewFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Order::class;
+    protected $model = Review::class;
 
     /**
      * Define the model's default state.
@@ -23,10 +23,11 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'obligation_id' => ::factory(),
-            'payment_record_id' => ::factory(),
-            'price' => fake()->randomFloat(2, 0, 999999.99),
+            'stars' => fake()->numberBetween(-10000, 10000),
+            'title' => fake()->sentence(4),
+            'content' => fake()->paragraphs(3, true),
             'user_id' => User::factory(),
+            'product_id' => Product::factory(),
         ];
     }
 }

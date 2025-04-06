@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Payments\PaymentRecord;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,11 +18,10 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'price',
-        'shipping_id',
+        'obligation_id',
+        'payment_record_id',
         'promotion_id',
-        'provider_order_id',
-        'order_status_id',
+        'price',
         'user_id',
     ];
 
@@ -32,27 +32,16 @@ class Order extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'price' => 'decimal:2',
-        'shipping_id' => 'integer',
+        'obligation_id' => 'integer',
+        'payment_record_id' => 'integer',
         'promotion_id' => 'integer',
-        'provider_order_id' => 'integer',
-        'order_status_id' => 'integer',
+        'price' => 'decimal:2',
         'user_id' => 'integer',
     ];
 
-    public function orderStatus(): BelongsTo
+    public function products(): BelongsToMany
     {
-        return $this->belongsTo(OrderStatus::class);
-    }
-
-    public function shipping(): BelongsTo
-    {
-        return $this->belongsTo(Shipping::class);
-    }
-
-    public function promotion(): BelongsTo
-    {
-        return $this->belongsTo(Promotion::class);
+        return $this->belongsToMany(\App\Models\Products\Product::class)->withPivot('quantity');
     }
 
     public function user(): BelongsTo
@@ -60,13 +49,18 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function providerOrder(): BelongsTo
+    public function obligation(): BelongsTo
     {
-        return $this->belongsTo(ProviderOrder::class);
+        return $this->belongsTo(Obligation::class);
     }
 
-    public function products(): BelongsToMany
+    public function paymentRecord(): BelongsTo
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsTo(PaymentRecord::class);
+    }
+
+    public function promotion(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Products\Promotion::class);
     }
 }

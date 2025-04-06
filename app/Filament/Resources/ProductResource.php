@@ -4,14 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Models\Product;
+use App\Models\Products\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductResource extends Resource
 {
@@ -25,6 +23,9 @@ class ProductResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
+                Forms\Components\Select::make('product_type_id')
+                    ->relationship(name: 'productType', titleAttribute: 'label')
+                    ->native(false),
                 Forms\Components\RichEditor::make('description')
                     ->fileAttachmentsDisk(config('filesystems.default'))
                     ->fileAttachmentsDirectory('article')
@@ -68,6 +69,7 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('productType.label'),
                 Tables\Columns\IconColumn::make('for_sale')
                     ->sortable()
                     ->boolean(),

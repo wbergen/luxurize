@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Products\Obligables\Obligable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Shipping extends Model
+class Obligation extends Model
 {
     use HasFactory;
 
@@ -17,13 +18,9 @@ class Shipping extends Model
      * @var array
      */
     protected $fillable = [
-        'address',
-        'address_two',
-        'city',
-        'state',
-        'zip',
-        'country',
+        'obligation_status_id',
         'user_id',
+        'order_id',
     ];
 
     /**
@@ -33,16 +30,28 @@ class Shipping extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'obligation_status_id' => 'integer',
         'user_id' => 'integer',
+        'order_id' => 'integer',
     ];
+
+    public function obligationStatus(): BelongsTo
+    {
+        return $this->belongsTo(ObligationStatus::class);
+    }
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function obligations(): BelongsToMany
+    public function order(): BelongsTo
     {
-        return $this->belongsToMany(Obligation::class);
+        return $this->belongsTo(Order::class);
+    }
+
+    public function obligables()
+    {
+        return $this->hasMany(Obligable::class);
     }
 }

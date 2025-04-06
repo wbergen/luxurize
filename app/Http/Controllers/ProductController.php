@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Products\Category;
+use App\Models\Products\Product;
+use App\Models\Products\Tag;
 use App\Models\ShoppingCart;
-use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Collection;

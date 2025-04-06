@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Products;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Shipping extends Model
+class Review extends Model
 {
     use HasFactory;
 
@@ -17,13 +16,11 @@ class Shipping extends Model
      * @var array
      */
     protected $fillable = [
-        'address',
-        'address_two',
-        'city',
-        'state',
-        'zip',
-        'country',
+        'stars',
+        'title',
+        'content',
         'user_id',
+        'product_id',
     ];
 
     /**
@@ -34,15 +31,16 @@ class Shipping extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
+        'product_id' => 'integer',
     ];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(\App\Models\User::class);
     }
 
-    public function obligations(): BelongsToMany
+    public function product(): BelongsTo
     {
-        return $this->belongsToMany(Obligation::class);
+        return $this->belongsTo(Product::class);
     }
 }

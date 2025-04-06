@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Products;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class ShoppingCart extends Model
+class Tag extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,7 @@ class ShoppingCart extends Model
      * @var array
      */
     protected $fillable = [
-        'session_id',
+        'name',
     ];
 
     /**
@@ -30,6 +30,6 @@ class ShoppingCart extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(\App\Models\Products\Product::class);
+        return $this->belongsToMany(Product::class);
     }
 }
